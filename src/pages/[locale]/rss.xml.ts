@@ -18,7 +18,7 @@ export function getStaticPaths() {
  * @param site - An object containing information about the current site.
  * @returns A response object containing the generated RSS feed.
  */
-export const get: APIRoute = async function get({ params, redirect, site }) {
+export const GET: APIRoute = async function GET({ params, redirect, site }) {
 	const locale = params.locale;
 
 	if (!locale) {
