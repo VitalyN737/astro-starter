@@ -6,7 +6,7 @@ backend:
     name: github
     branch: main
     repo: vitalyn737/astro-starter
-    site_domain: vitalyn737.github.io/astro-starter
+    site_domain: vitalyn737.github.io
     base_url: https://auth.decapbridge.com
     auth_endpoint: auth
 
