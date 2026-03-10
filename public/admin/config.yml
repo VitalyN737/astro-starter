@@ -6,6 +6,8 @@ backend:
     name: github
     branch: main
     repo: vitalyn737/astro-starter
+    base_url: https://auth.decapbridge.com
+    auth_endpoint: auth
 
 media_folder: "src/assets/images"
 public_folder: "@assets/images"
