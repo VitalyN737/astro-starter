@@ -3,12 +3,46 @@
 import translations from "@utils/t.ts";
 import Layout from "@layouts/Layout.astro";
 import Container from "@src/components/Container.astro";
+import { DEFAULT_LOCALE } from "@src/consts";
+import { getCollection } from "astro:content";
+import { getLocale, getLocaleUrlPrefix } from "astro-i18n-aut";
 
 const t = translations(Astro.url);
+const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
+const localeUrlPrefix = getLocaleUrlPrefix(Astro.url);
+
+const posts = (await getCollection("blog", (entry) => entry.slug.startsWith(`${locale}/`)))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4)
+	.map((post) => ({
+		href: localeUrlPrefix + "/blog" + post.slug.replace(locale, "") + "/",
+		...post,
+	}));
 ---
 
 <Layout>
 	<Container class="pt-16">
 		<span set:html={t.home_description} />
+
+		<section class="mt-10">
+			<h2 class="mb-4 text-2xl font-semibold">Latest posts</h2>
+			{
+				posts.length ? (
+					<ul class="m-0 list-disc space-y-2 pl-5">
+						{posts.map((post) => (
+							<li>
+								<a class="underline" href={post.href}>{post.data.title}</a>
+							</li>
+						))}
+					</ul>
+				) : (
+					<p>No posts found for this locale.</p>
+				)
+			}
+
+			<p class="mt-4">
+				<a class="underline" href={`${localeUrlPrefix}/blog/`}>Open all posts →</a>
+			</p>
+		</section>
 	</Container>
 </Layout>
