@@ -1,0 +1,11 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@src/components/Container.astro";
+import { getSiteContent } from "@src/data/siteContent";
+import { tFn } from "@utils/t";
+const c = getSiteContent(Astro.url);
+const t = tFn(Astro.url);
+---
+<Layout title={t("news")}>
+	<Container class="pt-12"><section class="glass-panel p-8"><h1 class="text-4xl">{t("news")}</h1><div class="mt-6 space-y-6">{c.news.map((n) => <article><h2 class="text-2xl">{n.title}</h2><p class="mt-2 text-slate-300">{n.body}</p></article>)}</div></section></Container>
+</Layout>

@@ -9,7 +9,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, DEFAULT_LOCALE } from "../consts";
  * @param {Object} site - The site object.
  * @returns {Response} - The response object containing the RSS feed.
  */
-export const get: APIRoute = async function get({ site }) {
+export const GET: APIRoute = async function GET({ site }) {
 	const posts = await getCollection("blog", (entry) => entry.slug.startsWith(DEFAULT_LOCALE));
 
 	const { body } = await rss({
