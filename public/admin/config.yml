@@ -1,54 +1,96 @@
-local_backend: true
-
-logo_url: /logo.svg
+logo_url: ../logo.svg
 
 backend:
-    name: github
-    branch: main
-    repo: zankhq/astro-starter
-    site_domain: astrostarter.majestico.it
-    base_url: https://astrostarter.majestico.it
-    auth_endpoint: oauth
-    automatic_deployments: true
+  name: github
+  repo: vitalyn737/astro-starter
+  branch: main
 
 media_folder: "src/assets/images"
 public_folder: "@assets/images"
 
 i18n:
-    structure: "multiple_folders"
-    locales:
-        - "en"
-        - "it"
-    default_locale: "en"
+  structure: "multiple_folders"
+  locales:
+    - "ja"
+    - "en"
+  default_locale: "ja"
 
 collections:
-    - name: "posts"
-      i18n: true
-      label: "Blog Posts"
-      folder: "src/content/blog"
-      media_folder: "/src/assets/images/blog"
-      public_folder: "@assets/images/blog"
-      create: true
-      delete: true
-      fields:
-          - name: "title"
-            widget: "string"
-            label: "Post Title"
-            i18n: true
-          - label: "Description"
-            name: "description"
-            widget: "string"
-            i18n: true
-          - label: "Publish Date"
-            name: "pubDate"
-            widget: "datetime"
-            format: "YYYY-MM-DD HH:mm"
-            i18n: "duplicate"
-          - label: "Image"
-            name: "heroImage"
-            widget: "image"
-            i18n: "duplicate"
-          - name: "body"
-            widget: "markdown"
-            label: "Post Body"
-            i18n: true
+  - name: "site_content"
+    label: "Site Content"
+    i18n: true
+    folder: "src/content/site"
+    create: false
+    delete: false
+    format: "json"
+    extension: "json"
+    slug: "site"
+    identifier_field: "heroTitle"
+    fields:
+      - { name: "heroTitle", label: "Hero Title", widget: "string", i18n: true }
+      - { name: "heroSubtitle", label: "Hero Subtitle", widget: "string", i18n: true }
+      - { name: "heroText", label: "Hero Text", widget: "text", i18n: true }
+      - label: "Schedule"
+        name: "schedule"
+        widget: "list"
+        i18n: true
+        fields:
+          - { name: "date", label: "Date", widget: "string" }
+          - { name: "city", label: "City", widget: "string" }
+          - { name: "venue", label: "Venue", widget: "string" }
+          - { name: "work", label: "Program", widget: "string" }
+      - label: "News"
+        name: "news"
+        widget: "list"
+        i18n: true
+        fields:
+          - { name: "title", label: "Title", widget: "string" }
+          - { name: "body", label: "Body", widget: "text" }
+      - label: "Repertoire"
+        name: "repertoire"
+        widget: "list"
+        i18n: true
+        field: { name: "item", label: "Work/Composer", widget: "string" }
+      - { name: "biography", label: "Biography", widget: "text", i18n: true }
+      - label: "Media"
+        name: "media"
+        widget: "list"
+        i18n: true
+        field: { name: "item", label: "Media Item", widget: "string" }
+      - label: "CDs"
+        name: "cds"
+        widget: "list"
+        i18n: true
+        field: { name: "item", label: "CD Title", widget: "string" }
+      - { name: "contactTitle", label: "Contact Section Title", widget: "string", i18n: true }
+
+  - name: "posts"
+    i18n: true
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    media_folder: "/src/assets/images/blog"
+    public_folder: "@assets/images/blog"
+    create: true
+    delete: true
+    fields:
+      - name: "title"
+        widget: "string"
+        label: "Post Title"
+        i18n: true
+      - label: "Description"
+        name: "description"
+        widget: "string"
+        i18n: true
+      - label: "Publish Date"
+        name: "pubDate"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        i18n: "duplicate"
+      - label: "Image"
+        name: "heroImage"
+        widget: "image"
+        i18n: "duplicate"
+      - name: "body"
+        widget: "markdown"
+        label: "Post Body"
+        i18n: true

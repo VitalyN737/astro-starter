@@ -1,0 +1,20 @@
+{
+  "heroTitle": "Vitaly Yushmanov",
+  "heroSubtitle": "Baritone | Official Website",
+  "heroText": "Official website of opera singer Vitaly Yushmanov. Explore schedule, news, repertoire, media appearances, and contact information.",
+  "schedule": [
+    { "date": "2026-04-12", "city": "Tokyo", "venue": "Suntory Hall", "work": "German Lied Recital" },
+    { "date": "2026-05-03", "city": "Osaka", "venue": "Festival Hall", "work": "Mahler: Songs of a Wayfarer" },
+    { "date": "2026-06-20", "city": "Berlin", "venue": "Konzerthaus", "work": "Schubert Lieder Program" }
+  ],
+  "news": [
+    { "title": "Japan Tour 2026 announced", "body": "Spring tour dates are now available for Tokyo, Osaka, and Nagoya." },
+    { "title": "New CD release", "body": "A new album featuring Russian romances and German lieder is now available." },
+    { "title": "Masterclass in Tokyo", "body": "A vocal masterclass for young singers will be held this season." }
+  ],
+  "repertoire": ["Mozart", "Tchaikovsky", "Verdi", "Mahler", "Schubert", "Rachmaninoff"],
+  "biography": "Vitaly Yushmanov is an internationally active baritone, performing opera, song recitals, and sacred repertoire across Europe and Japan.",
+  "media": ["Performance videos on official YouTube channel", "Interviews and press reviews", "Concert photography and promotional materials"],
+  "cds": ["Russian Romances", "Schubert Lieder Selection", "Live in Tokyo"],
+  "contactTitle": "Contact"
+}

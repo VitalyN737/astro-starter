@@ -1,14 +1,40 @@
 ---
-// import translations
-import translations from "@utils/t.ts";
 import Layout from "@layouts/Layout.astro";
 import Container from "@src/components/Container.astro";
+import { getSiteContent } from "@src/data/siteContent";
+import { tFn } from "@utils/t";
 
-const t = translations(Astro.url);
+const c = getSiteContent(Astro.url);
+const t = tFn(Astro.url);
 ---
 
-<Layout>
-	<Container class="pt-16">
-		<span set:html={t.home_description} />
+<Layout title={c.heroTitle} description={c.heroText}>
+	<Container class="pt-12 md:pt-20">
+		<section class="glass-panel p-8 md:p-12">
+			<p class="text-sm uppercase tracking-[0.25em] text-blue-300">Opera Singer</p>
+			<h1 class="mt-3 text-4xl font-semibold md:text-6xl">{c.heroTitle}</h1>
+			<p class="mt-3 text-lg text-slate-300">{c.heroSubtitle}</p>
+			<p class="mt-6 max-w-3xl text-slate-200">{c.heroText}</p>
+		</section>
+
+		<section class="mt-10 grid gap-6 md:grid-cols-3">
+			<div class="glass-panel p-6 md:col-span-2">
+				<h2 class="mb-4 text-2xl">{t("latest_news")}</h2>
+				<ul class="space-y-4">
+					{c.news.slice(0, 2).map((n) => (
+						<li>
+							<h3 class="text-lg">{n.title}</h3>
+							<p class="text-slate-300">{n.body}</p>
+						</li>
+					))}
+				</ul>
+			</div>
+			<div class="glass-panel p-6">
+				<h2 class="mb-4 text-2xl">{t("schedule")}</h2>
+				<ul class="space-y-3 text-sm">
+					{c.schedule.slice(0, 3).map((s) => <li><strong>{s.date}</strong><br />{s.city} · {s.venue}</li>)}
+				</ul>
+			</div>
+		</section>
 	</Container>
 </Layout>
