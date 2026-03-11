@@ -1,0 +1,12 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@src/components/Container.astro";
+import { DEFAULT_LOCALE } from "@src/consts";
+import { getEntry } from "astro:content";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
+const page = await getEntry({ collection: "pages", slug: `${locale}/biography` });
+const { Content } = await page!.render();
+---
+<Layout title={page?.data.title}><Container class="pt-12"><section class="glass-panel p-8"><h1 class="text-4xl">{page?.data.title}</h1><div class="prose prose-invert mt-6 max-w-none"><Content /></div></section></Container></Layout>

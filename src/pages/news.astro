@@ -1,0 +1,14 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@src/components/Container.astro";
+import { DEFAULT_LOCALE } from "@src/consts";
+import { getCollection, getEntry } from "astro:content";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
+const page = await getEntry({ collection: "pages", slug: `${locale}/news` });
+const { Content: PageContent } = await page!.render();
+const entries = (await getCollection("news", (e) => e.slug.startsWith(`${locale}/`))).sort((a,b)=>b.data.date.valueOf()-a.data.date.valueOf());
+const items = await Promise.all(entries.map(async (e) => ({ ...e, Content: (await e.render()).Content })));
+---
+<Layout title={page?.data.title}><Container class="pt-12"><section class="glass-panel p-8"><h1 class="text-4xl">{page?.data.title}</h1><div class="prose prose-invert mt-4"><PageContent /></div><div class="mt-6 space-y-6">{items.map((n)=><article><h2 class="text-2xl">{n.data.title}</h2><p class="text-sm text-slate-400">{n.data.date.toISOString().slice(0,10)}</p><div class="prose prose-invert mt-2"><n.Content /></div></article>)}</div></section></Container></Layout>

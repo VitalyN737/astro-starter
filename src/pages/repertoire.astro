@@ -1,0 +1,14 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@src/components/Container.astro";
+import { DEFAULT_LOCALE } from "@src/consts";
+import { getCollection, getEntry } from "astro:content";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
+const page = await getEntry({ collection: "pages", slug: `${locale}/repertoire` });
+const { Content: PageContent } = await page!.render();
+const entries = await getCollection("repertoire", (e) => e.slug.startsWith(`${locale}/`));
+const items = await Promise.all(entries.map(async (e) => ({ ...e, Content: (await e.render()).Content })));
+---
+<Layout title={page?.data.title}><Container class="pt-12"><section class="glass-panel p-8"><h1 class="text-4xl">{page?.data.title}</h1><div class="prose prose-invert mt-4"><PageContent /></div><ul class="mt-6 grid gap-3 md:grid-cols-2">{items.map((r)=><li class="rounded-lg border border-blue-200/20 p-4"><h3>{r.data.title}</h3><p class="text-slate-400">{r.data.composer}</p><div class="prose prose-invert mt-1"><r.Content /></div></li>)}</ul></section></Container></Layout>

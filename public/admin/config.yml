@@ -1,54 +1,123 @@
-local_backend: true
-
-logo_url: /logo.svg
+logo_url: ../logo.svg
 
 backend:
-    name: github
-    branch: main
-    repo: zankhq/astro-starter
-    site_domain: astrostarter.majestico.it
-    base_url: https://astrostarter.majestico.it
-    auth_endpoint: oauth
-    automatic_deployments: true
+  name: github
+  repo: vitalyn737/astro-starter
+  branch: main
 
 media_folder: "src/assets/images"
 public_folder: "@assets/images"
 
 i18n:
-    structure: "multiple_folders"
-    locales:
-        - "en"
-        - "it"
-    default_locale: "en"
+  structure: "multiple_folders"
+  locales:
+    - "ja"
+    - "en"
+  default_locale: "ja"
 
 collections:
-    - name: "posts"
-      i18n: true
-      label: "Blog Posts"
-      folder: "src/content/blog"
-      media_folder: "/src/assets/images/blog"
-      public_folder: "@assets/images/blog"
-      create: true
-      delete: true
-      fields:
-          - name: "title"
-            widget: "string"
-            label: "Post Title"
-            i18n: true
-          - label: "Description"
-            name: "description"
-            widget: "string"
-            i18n: true
-          - label: "Publish Date"
-            name: "pubDate"
-            widget: "datetime"
-            format: "YYYY-MM-DD HH:mm"
-            i18n: "duplicate"
-          - label: "Image"
-            name: "heroImage"
-            widget: "image"
-            i18n: "duplicate"
-          - name: "body"
-            widget: "markdown"
-            label: "Post Body"
-            i18n: true
+  - name: "pages"
+    label: "Site Pages"
+    i18n: true
+    folder: "src/content/pages"
+    create: false
+    delete: false
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Page Title", widget: "string", i18n: true }
+      - { name: "body", label: "Content", widget: "markdown", i18n: true }
+
+  - name: "schedule"
+    label: "Schedule Items"
+    i18n: true
+    folder: "src/content/schedule"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Title", widget: "string", i18n: true }
+      - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD", time_format: false, i18n: "duplicate" }
+      - { name: "city", label: "City", widget: "string", i18n: true }
+      - { name: "venue", label: "Venue", widget: "string", i18n: true }
+      - { name: "body", label: "Details", widget: "markdown", i18n: true }
+
+  - name: "news"
+    label: "News Items"
+    i18n: true
+    folder: "src/content/news"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Title", widget: "string", i18n: true }
+      - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD", time_format: false, i18n: "duplicate" }
+      - { name: "body", label: "Content", widget: "markdown", i18n: true }
+
+  - name: "cds"
+    label: "CDs"
+    i18n: true
+    folder: "src/content/cds"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Album Title", widget: "string", i18n: true }
+      - { name: "year", label: "Year", widget: "number", value_type: "int", required: false, i18n: "duplicate" }
+      - { name: "label", label: "Label", widget: "string", required: false, i18n: true }
+      - { name: "body", label: "Description", widget: "markdown", i18n: true }
+
+  - name: "media"
+    label: "Media Items"
+    i18n: true
+    folder: "src/content/media"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Title", widget: "string", i18n: true }
+      - { name: "type", label: "Type", widget: "string", required: false, i18n: true }
+      - { name: "link", label: "Link", widget: "string", required: false, i18n: "duplicate" }
+      - { name: "body", label: "Content", widget: "markdown", i18n: true }
+
+  - name: "repertoire"
+    label: "Repertoire Items"
+    i18n: true
+    folder: "src/content/repertoire"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Work", widget: "string", i18n: true }
+      - { name: "composer", label: "Composer", widget: "string", required: false, i18n: true }
+      - { name: "body", label: "Notes", widget: "markdown", i18n: true }
+
+  - name: "posts"
+    i18n: true
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    media_folder: "/src/assets/images/blog"
+    public_folder: "@assets/images/blog"
+    create: true
+    delete: true
+    fields:
+      - name: "title"
+        widget: "string"
+        label: "Post Title"
+        i18n: true
+      - label: "Description"
+        name: "description"
+        widget: "string"
+        i18n: true
+      - label: "Publish Date"
+        name: "pubDate"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        i18n: "duplicate"
+      - label: "Image"
+        name: "heroImage"
+        widget: "image"
+        i18n: "duplicate"
+      - name: "body"
+        widget: "markdown"
+        label: "Post Body"
+        i18n: true

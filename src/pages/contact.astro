@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@src/components/Container.astro";
+import { DEFAULT_LOCALE } from "@src/consts";
+import { getEntry } from "astro:content";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
+const page = await getEntry({ collection: "pages", slug: `${locale}/contact` });
+const { Content } = await page!.render();
+---
+<Layout title={page?.data.title}>
+	<Container class="pt-12">
+		<section class="glass-panel p-8">
+			<h1 class="text-4xl">{page?.data.title}</h1>
+			<div class="prose prose-invert mt-4"><Content /></div>
+			<form class="mt-8 grid gap-4" method="POST" action="https://formspree.io/f/your-id">
+				<input class="rounded-lg border border-slate-500/40 bg-black/30 px-4 py-3" name="name" placeholder="Name" required />
+				<input class="rounded-lg border border-slate-500/40 bg-black/30 px-4 py-3" type="email" name="email" placeholder="Email" required />
+				<input class="rounded-lg border border-slate-500/40 bg-black/30 px-4 py-3" name="subject" placeholder="Subject" required />
+				<textarea class="rounded-lg border border-slate-500/40 bg-black/30 px-4 py-3" name="message" rows="6" placeholder="Message" required></textarea>
+				<button class="rounded-lg bg-blue-900 px-5 py-3 text-white hover:bg-blue-800" type="submit">Send</button>
+			</form>
+		</section>
+	</Container>
+</Layout>

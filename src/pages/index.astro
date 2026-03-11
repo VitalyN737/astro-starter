@@ -1,14 +1,46 @@
 ---
-// import translations
-import translations from "@utils/t.ts";
 import Layout from "@layouts/Layout.astro";
 import Container from "@src/components/Container.astro";
+import { DEFAULT_LOCALE } from "@src/consts";
+import { getCollection, getEntry } from "astro:content";
+import { getLocale } from "astro-i18n-aut";
+import { tFn } from "@utils/t";
 
-const t = translations(Astro.url);
+const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
+const t = tFn(Astro.url);
+
+const home = await getEntry({ collection: "pages", slug: `${locale}/home` });
+const { Content: HomeContent } = await home!.render();
+
+const newsEntries = (await getCollection("news", (e) => e.slug.startsWith(`${locale}/`)))
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 2);
+
+const scheduleEntries = (await getCollection("schedule", (e) => e.slug.startsWith(`${locale}/`)))
+	.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+	.slice(0, 3);
 ---
 
-<Layout>
-	<Container class="pt-16">
-		<span set:html={t.home_description} />
+<Layout title="Vitaly Yushmanov">
+	<Container class="pt-12 md:pt-20">
+		<section class="glass-panel p-8 md:p-12">
+			<h1 class="mt-3 text-4xl font-semibold md:text-6xl">Vitaly Yushmanov</h1>
+			<div class="prose prose-invert mt-4 max-w-none"><HomeContent /></div>
+		</section>
+
+		<section class="mt-10 grid gap-6 md:grid-cols-3">
+			<div class="glass-panel p-6 md:col-span-2">
+				<h2 class="mb-4 text-2xl">{t("latest_news")}</h2>
+				<ul class="space-y-4">
+					{newsEntries.map((n) => <li><h3 class="text-lg">{n.data.title}</h3></li>)}
+				</ul>
+			</div>
+			<div class="glass-panel p-6">
+				<h2 class="mb-4 text-2xl">{t("schedule")}</h2>
+				<ul class="space-y-3 text-sm">
+					{scheduleEntries.map((s) => <li><strong>{s.data.date.toISOString().slice(0,10)}</strong><br />{s.data.city} · {s.data.venue}</li>)}
+				</ul>
+			</div>
+		</section>
 	</Container>
 </Layout>
