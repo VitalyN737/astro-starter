@@ -3,7 +3,7 @@ logo_url: ../logo.svg
 backend:
   name: github
   repo: vitalyn737/astro-starter
-  branch: codex/fix-workflow-errors-and-restore-site-functionality-lbf36d
+  branch: main
 
 media_folder: "src/assets/images"
 public_folder: "@assets/images"
