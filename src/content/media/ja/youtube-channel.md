@@ -1,6 +1,6 @@
 ---
-title: YouTube公式チャンネル
-type: Video
+title: 公式YouTubeチャンネル
+type: video
 link: https://www.youtube.com/
 ---
-公演映像とインタビューを公開しています。
+演奏ビデオやインタビューをご覧ください。

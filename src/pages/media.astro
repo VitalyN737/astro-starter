@@ -4,6 +4,9 @@ import Container from "@src/components/Container.astro";
 import { DEFAULT_LOCALE } from "@src/consts";
 import { getCollection, getEntry } from "astro:content";
 import { getLocale } from "astro-i18n-aut";
+import ImageCarousel from "@components/ImageCarousel.astro";
+import VideoPlayer from "@components/VideoPlayer.astro";
+import AudioPlayer from "@components/AudioPlayer.astro";
 
 const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
 const page = await getEntry({ collection: "pages", slug: `${locale}/media` });
@@ -11,4 +14,41 @@ const { Content: PageContent } = await page!.render();
 const entries = await getCollection("media", (e) => e.slug.startsWith(`${locale}/`));
 const items = await Promise.all(entries.map(async (e) => ({ ...e, Content: (await e.render()).Content })));
 ---
-<Layout title={page?.data.title}><Container class="pt-12"><section class="glass-panel p-8"><h1 class="text-4xl">{page?.data.title}</h1><div class="prose prose-invert mt-4"><PageContent /></div><div class="mt-6 space-y-5">{items.map((m)=><article class="rounded-xl border border-blue-200/20 p-5"><h2 class="text-xl">{m.data.title}</h2>{m.data.link && <p><a href={m.data.link} target="_blank" rel="noreferrer">{m.data.link}</a></p>}<div class="prose prose-invert mt-2"><m.Content /></div></article>)}</div></section></Container></Layout>
+
+<Layout title={page?.data.title}>
+	<Container class="pt-12">
+		<section class="glass-panel p-8">
+			<h1 class="text-4xl">{page?.data.title}</h1>
+			<div class="prose prose-invert mt-4">
+				<PageContent />
+			</div>
+			<div class="mt-6 space-y-8">
+				{
+					items.map((m) => (
+						<article class="rounded-xl border border-blue-200/20 p-6">
+							<h2 class="mb-4 text-2xl font-semibold">{m.data.title}</h2>
+
+							<div class="mb-4">
+								{m.data.type === "carousel" && m.data.images && <ImageCarousel images={m.data.images} />}
+								{m.data.type === "video" && <VideoPlayer link={m.data.link} />}
+								{m.data.type === "audio" && <AudioPlayer link={m.data.link} />}
+							</div>
+
+							<div class="prose prose-invert mt-2">
+								<m.Content />
+							</div>
+
+							{m.data.link && m.data.type !== "video" && m.data.type !== "audio" && (
+								<p class="mt-4">
+									<a href={m.data.link} target="_blank" rel="noreferrer" class="text-blue-400 hover:underline">
+										{m.data.link}
+									</a>
+								</p>
+							)}
+						</article>
+					))
+				}
+			</div>
+		</section>
+	</Container>
+</Layout>
