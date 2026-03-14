@@ -2,7 +2,7 @@ name: Deploy Astro
 
 on:
   push:
-    branches: [main]
+    branches: [codex/fix-workflow-errors-and-restore-site-functionality-lbf36d]
   workflow_dispatch:
 
 permissions:
