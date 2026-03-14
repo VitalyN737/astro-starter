@@ -4,9 +4,9 @@ import Container from "@src/components/Container.astro";
 import { DEFAULT_LOCALE } from "@src/consts";
 import { getCollection, getEntry } from "astro:content";
 import { getLocale } from "astro-i18n-aut";
-import ImageCarousel from "@components/ImageCarousel.astro";
-import VideoPlayer from "@components/VideoPlayer.astro";
-import AudioPlayer from "@components/AudioPlayer.astro";
+import ImageCarousel from "@src/components/ImageCarousel.astro";
+import VideoPlayer from "@src/components/VideoPlayer.astro";
+import AudioPlayer from "@src/components/AudioPlayer.astro";
 
 const locale = getLocale(Astro.url) ?? DEFAULT_LOCALE;
 const page = await getEntry({ collection: "pages", slug: `${locale}/media` });
