@@ -42,11 +42,13 @@ const cds = defineCollection({
 });
 
 const media = defineCollection({
-	schema: z.object({
-		title: z.string(),
-		type: z.string().optional(),
-		link: z.string().optional(),
-	}),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			type: z.enum(["video", "audio", "carousel"]).optional(),
+			link: z.string().optional(),
+			images: z.array(image()).optional(),
+		}),
 });
 
 const repertoire = defineCollection({
